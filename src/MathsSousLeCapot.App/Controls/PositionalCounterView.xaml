@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView
+    x:Class="MathsSousLeCapot.App.Controls.PositionalCounterView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:loc="clr-namespace:MathsSousLeCapot.App.Localization"
+    xmlns:viewModels="clr-namespace:MathsSousLeCapot.App.Features.PositionalCounter"
+    x:DataType="viewModels:CounterViewModel">
+    <VerticalStackLayout Spacing="14">
+        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+            <Label
+                FontAttributes="Bold"
+                FontSize="20"
+                Text="{Binding BaseLabel}"
+                VerticalOptions="Center" />
+            <Picker
+                x:Name="BasePicker"
+                Grid.Column="1"
+                IsVisible="False"
+                SelectedIndex="0"
+                SelectedIndexChanged="OnBaseChanged"
+                SemanticProperties.Description="{loc:Translate counter.baseTitle}"
+                Title="{loc:Translate counter.baseTitle}" />
+        </Grid>
+
+        <Border
+            BackgroundColor="{StaticResource CardBackground}"
+            Stroke="{StaticResource Border}"
+            StrokeShape="RoundRectangle 18">
+            <GraphicsView
+                x:Name="CounterGraphics"
+                HeightRequest="180"
+                MinimumHeightRequest="160"
+                SemanticProperties.Description="{loc:Translate accessibility.counter}" />
+        </Border>
+
+        <Grid
+            ColumnDefinitions="*,*,*"
+            RowDefinitions="Auto,Auto"
+            ColumnSpacing="8"
+            RowSpacing="8">
+            <Button
+                x:Name="RemoveHundredButton"
+                Clicked="OnRemoveHundredClicked"
+                SemanticProperties.Description="{loc:Translate accessibility.removeHundred}"
+                Style="{StaticResource SecondaryButton}"
+                Text="−100" />
+            <Button
+                x:Name="RemoveTenButton"
+                Grid.Column="1"
+                Clicked="OnRemoveTenClicked"
+                SemanticProperties.Description="{loc:Translate accessibility.removeTen}"
+                Style="{StaticResource SecondaryButton}"
+                Text="−10" />
+            <Button
+                x:Name="DecrementButton"
+                Grid.Column="2"
+                Clicked="OnDecrementClicked"
+                SemanticProperties.Description="{loc:Translate accessibility.removeOne}"
+                Style="{StaticResource SecondaryButton}"
+                Text="−1" />
+            <Button
+                x:Name="AddHundredButton"
+                Grid.Row="1"
+                Clicked="OnAddHundredClicked"
+                SemanticProperties.Description="{loc:Translate accessibility.addHundred}"
+                Text="+100" />
+            <Button
+                x:Name="AddTenButton"
+                Grid.Row="1"
+                Grid.Column="1"
+                Clicked="OnAddTenClicked"
+                SemanticProperties.Description="{loc:Translate accessibility.addTen}"
+                Text="+10" />
+            <Button
+                x:Name="IncrementButton"
+                Grid.Row="1"
+                Grid.Column="2"
+                Clicked="OnIncrementClicked"
+                SemanticProperties.Description="{loc:Translate accessibility.addOne}"
+                Text="+1" />
+        </Grid>
+
+        <Border
+            BackgroundColor="{StaticResource ExplanationBackground}"
+            StrokeThickness="0"
+            StrokeShape="RoundRectangle 14">
+            <Label
+                Padding="16,12"
+                LineBreakMode="WordWrap"
+                Text="{Binding Explanation}" />
+        </Border>
+    </VerticalStackLayout>
+</ContentView>

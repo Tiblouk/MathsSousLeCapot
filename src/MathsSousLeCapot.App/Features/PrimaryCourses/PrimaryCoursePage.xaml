@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="MathsSousLeCapot.App.Features.PrimaryCourses.PrimaryCoursePage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:MathsSousLeCapot.App.Controls"
+    xmlns:loc="clr-namespace:MathsSousLeCapot.App.Localization">
+    <Grid RowDefinitions="*,Auto">
+        <ScrollView>
+            <VerticalStackLayout MaximumWidthRequest="820" Padding="24,28" Spacing="18">
+                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                    <Button
+                        Clicked="OnBackToCoursesClicked"
+                        Style="{StaticResource SecondaryButton}"
+                        Text="{loc:Translate navigation.courseList}" />
+                    <Button
+                        Grid.Column="1"
+                        Clicked="OnCalculationAssistantClicked"
+                        HorizontalOptions="End"
+                        Style="{StaticResource SecondaryButton}"
+                        Text="{loc:Translate primaryAssistant.open}" />
+                </Grid>
+                <Label x:Name="StepIndicator" FontAttributes="Bold" FontSize="13" TextColor="{DynamicResource Primary}" />
+                <Label x:Name="StepTitle" Style="{StaticResource PageTitle}" />
+                <controls:PedagogicalExplanationView x:Name="StepExplanation" />
+                <Border x:Name="ExamplePanel" Style="{StaticResource Card}">
+                    <VerticalStackLayout Spacing="8">
+                        <Label FontAttributes="Bold" Text="{loc:Translate common.example}" TextColor="{DynamicResource Primary}" />
+                        <Label x:Name="StepExample" FontAttributes="Bold" FontSize="22" />
+                    </VerticalStackLayout>
+                </Border>
+                <controls:WrittenCalculationView
+                    x:Name="DiscoveryCalculation"
+                    IsVisible="False" />
+
+                <Border x:Name="MeasurementTablePanel" IsVisible="False" Style="{StaticResource Card}">
+                    <VerticalStackLayout Spacing="12">
+                        <Label
+                            FontAttributes="Bold"
+                            FontSize="20"
+                            Text="{loc:Translate measure.table.title}" />
+                        <Label
+                            Text="{loc:Translate measure.table.intro}"
+                            TextColor="{DynamicResource TextSecondary}" />
+                        <ScrollView HorizontalScrollBarVisibility="Always" Orientation="Horizontal">
+                            <VerticalStackLayout x:Name="MeasurementRows" Spacing="6" />
+                        </ScrollView>
+                        <Label
+                            FontAttributes="Bold"
+                            Text="{loc:Translate measure.table.linearRule}"
+                            TextColor="{DynamicResource Primary}" />
+                        <Label
+                            FontAttributes="Bold"
+                            Text="{loc:Translate measure.table.areaRule}"
+                            TextColor="{DynamicResource Success}" />
+                        <Label Text="{loc:Translate measure.table.areaExplanation}" />
+                        <Label
+                            FontAttributes="Bold"
+                            FontSize="18"
+                            Text="{loc:Translate measure.table.areaExample}" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <Border x:Name="ExercisePanel" IsVisible="False" Style="{StaticResource Card}">
+                    <VerticalStackLayout Spacing="12">
+                        <Label FontSize="13" Text="{loc:Translate answer.acceptedFormats}" TextColor="{DynamicResource TextSecondary}" />
+                        <VerticalStackLayout x:Name="ExerciseQuestionsPanel" Spacing="14" />
+                        <Grid x:Name="ExerciseActions" ColumnDefinitions="*,*" ColumnSpacing="12">
+                            <Button x:Name="CheckButton" Clicked="OnCheckAnswersClicked" Text="{loc:Translate actions.checkAnswer}" />
+                            <Button x:Name="NewExampleButton" Grid.Column="1" Clicked="OnNewExampleClicked" Style="{StaticResource SecondaryButton}" Text="{loc:Translate actions.newExample}" />
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+            </VerticalStackLayout>
+        </ScrollView>
+        <Grid Grid.Row="1" BackgroundColor="{DynamicResource Background}" ColumnDefinitions="*,*" ColumnSpacing="12" Padding="24,14">
+            <Button x:Name="PreviousButton" Clicked="OnPreviousClicked" Style="{StaticResource SecondaryButton}" Text="{loc:Translate navigation.previous}" />
+            <Button x:Name="NextButton" Grid.Column="1" Clicked="OnNextClicked" Text="{loc:Translate navigation.next}" />
+        </Grid>
+    </Grid>
+</ContentPage>

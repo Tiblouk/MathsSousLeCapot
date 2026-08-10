@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="MathsSousLeCapot.App.Features.PrimaryCourses.PrimaryTrainingPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:loc="clr-namespace:MathsSousLeCapot.App.Localization">
+    <ScrollView>
+        <VerticalStackLayout MaximumWidthRequest="820" Padding="24,28,24,40" Spacing="18">
+            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                <Button Clicked="OnBackToCoursesClicked" Style="{StaticResource SecondaryButton}" Text="{loc:Translate navigation.courseList}" />
+                <Button
+                    Grid.Column="1"
+                    Clicked="OnCalculationAssistantClicked"
+                    HorizontalOptions="End"
+                    Style="{StaticResource SecondaryButton}"
+                    Text="{loc:Translate primaryAssistant.open}" />
+            </Grid>
+            <Label x:Name="TitleLabel" Style="{StaticResource PageTitle}" />
+            <Label x:Name="IntroLabel" TextColor="{DynamicResource TextSecondary}" />
+            <Label FontSize="13" Text="{loc:Translate answer.acceptedFormats}" TextColor="{DynamicResource TextSecondary}" />
+            <Border x:Name="SetupPanel" Style="{StaticResource Card}">
+                <VerticalStackLayout Spacing="14">
+                    <Label FontAttributes="Bold" Text="{loc:Translate common.level}" />
+                    <Picker x:Name="DifficultyPicker" SelectedIndex="0" />
+                    <Button Clicked="OnStartClicked" Text="{loc:Translate actions.start}" />
+                </VerticalStackLayout>
+            </Border>
+            <VerticalStackLayout x:Name="QuestionsPanel" IsVisible="False" Spacing="12" />
+            <Button x:Name="VerifyButton" Clicked="OnVerifyClicked" IsVisible="False" Text="{loc:Translate actions.checkFiveAnswers}" />
+            <VerticalStackLayout x:Name="SummaryPanel" IsVisible="False" Spacing="12">
+                <Label x:Name="ScoreLabel" Style="{StaticResource SectionTitle}" />
+                <VerticalStackLayout x:Name="ResultsList" Spacing="10" />
+                <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
+                    <Button Clicked="OnQuitClicked" Style="{StaticResource SecondaryButton}" Text="{loc:Translate navigation.quit}" />
+                    <Button Grid.Column="1" Clicked="OnContinueClicked" Text="{loc:Translate actions.fiveMoreExercises}" />
+                </Grid>
+            </VerticalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

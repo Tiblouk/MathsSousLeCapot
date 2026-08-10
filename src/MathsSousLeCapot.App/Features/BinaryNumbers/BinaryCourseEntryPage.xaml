@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="MathsSousLeCapot.App.Features.BinaryNumbers.BinaryCourseEntryPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:loc="clr-namespace:MathsSousLeCapot.App.Localization"
+    Title="{loc:Translate course.binary.pageTitle}">
+    <ScrollView>
+        <VerticalStackLayout
+            MaximumWidthRequest="760"
+            Padding="24,28,24,40"
+            Spacing="20">
+            <Button
+                Clicked="OnBackToCoursesClicked"
+                HorizontalOptions="Start"
+                Style="{StaticResource SecondaryButton}"
+                Text="{loc:Translate navigation.courseList}" />
+            <Label
+                FontAttributes="Bold"
+                FontSize="13"
+                Text="{loc:Translate course.binary.badge}"
+                TextColor="{StaticResource Primary}" />
+            <Label Style="{StaticResource PageTitle}" Text="{loc:Translate course.binary.title}" />
+            <Border Style="{StaticResource Card}">
+                <VerticalStackLayout Spacing="14">
+                    <Label Style="{StaticResource SectionTitle}" Text="{loc:Translate common.objective}" />
+                    <Label FontSize="17" Text="{loc:Translate course.binary.objective}" />
+                    <Label Style="{StaticResource SectionTitle}" Text="{loc:Translate common.summary}" />
+                    <Label Text="{loc:Translate course.binary.summary}" />
+                    <Label Style="{StaticResource SectionTitle}" Text="{loc:Translate common.prerequisite}" />
+                    <Button
+                        Clicked="OnOpenPrerequisiteClicked"
+                        HorizontalOptions="Start"
+                        Style="{StaticResource SecondaryButton}"
+                        Text="{loc:Translate course.counter.title}" />
+                </VerticalStackLayout>
+            </Border>
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
+                <Button Clicked="OnReadCourseClicked" Text="{loc:Translate actions.readCourse}" />
+                <Button
+                    Grid.Column="1"
+                    Clicked="OnTrainClicked"
+                    Style="{StaticResource SecondaryButton}"
+                    Text="{loc:Translate actions.train}" />
+            </Grid>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

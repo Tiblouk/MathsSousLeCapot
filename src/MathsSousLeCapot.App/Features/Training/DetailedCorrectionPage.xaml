@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="MathsSousLeCapot.App.Features.Training.DetailedCorrectionPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:loc="clr-namespace:MathsSousLeCapot.App.Localization">
+    <ScrollView>
+        <VerticalStackLayout MaximumWidthRequest="820" Padding="24,28,24,40" Spacing="18">
+            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+                <Label x:Name="TitleLabel" Style="{StaticResource PageTitle}" />
+                <Button
+                    Grid.Column="1"
+                    Clicked="OnCloseClicked"
+                    Style="{StaticResource SecondaryButton}"
+                    Text="{loc:Translate actions.close}" />
+            </Grid>
+            <Border x:Name="StatusCard">
+                <VerticalStackLayout Spacing="8">
+                    <Label x:Name="StatusLabel" FontAttributes="Bold" FontSize="20" />
+                    <Label x:Name="StatusExplanationLabel" TextColor="{DynamicResource TextSecondary}" />
+                </VerticalStackLayout>
+            </Border>
+            <Border Style="{StaticResource Card}">
+                <VerticalStackLayout Spacing="12">
+                    <Label FontAttributes="Bold" Text="{loc:Translate correction.detail.statement}" />
+                    <Label x:Name="QuestionLabel" />
+                    <Label FontAttributes="Bold" Text="{loc:Translate correction.detail.givenAnswer}" />
+                    <Label x:Name="GivenAnswerLabel" />
+                    <Label FontAttributes="Bold" Text="{loc:Translate correction.detail.correctAnswer}" />
+                    <Label x:Name="CorrectAnswerLabel" />
+                </VerticalStackLayout>
+            </Border>
+            <VerticalStackLayout x:Name="CalculationPanel" Spacing="8" />
+            <Border Style="{StaticResource Card}">
+                <VerticalStackLayout Spacing="10">
+                    <Label FontAttributes="Bold" FontSize="18" Text="{loc:Translate correction.detail.reasoning}" />
+                    <Label x:Name="DetailedExplanationLabel" LineBreakMode="WordWrap" />
+                </VerticalStackLayout>
+            </Border>
+            <Button Clicked="OnCloseClicked" Text="{loc:Translate actions.close}" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

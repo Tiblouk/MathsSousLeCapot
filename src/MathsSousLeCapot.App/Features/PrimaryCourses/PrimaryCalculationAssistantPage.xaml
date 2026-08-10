@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="MathsSousLeCapot.App.Features.PrimaryCourses.PrimaryCalculationAssistantPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:MathsSousLeCapot.App.Controls"
+    xmlns:loc="clr-namespace:MathsSousLeCapot.App.Localization"
+    BackgroundColor="{DynamicResource Background}">
+    <Grid RowDefinitions="Auto,*">
+        <Grid
+            Padding="20,14"
+            BackgroundColor="{DynamicResource CardBackground}"
+            ColumnDefinitions="*,Auto"
+            ColumnSpacing="12">
+            <Label
+                FontAttributes="Bold"
+                FontSize="20"
+                Text="{loc:Translate primaryAssistant.title}"
+                VerticalTextAlignment="Center" />
+            <Button
+                Grid.Column="1"
+                Clicked="OnCloseClicked"
+                Style="{StaticResource SecondaryButton}"
+                Text="{loc:Translate primaryAssistant.close}" />
+        </Grid>
+
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout
+                MaximumWidthRequest="720"
+                Padding="20,22,20,40"
+                Spacing="16">
+                <Label
+                    x:Name="IntroLabel"
+                    Text="{loc:Translate primaryAssistant.intro}"
+                    TextColor="{DynamicResource TextSecondary}" />
+
+                <Border x:Name="SetupPanel" Style="{StaticResource Card}">
+                    <VerticalStackLayout Spacing="12">
+                        <Label
+                            FontAttributes="Bold"
+                            FontSize="18"
+                            Text="{loc:Translate primaryAssistant.setupTitle}" />
+                        <Label Text="{loc:Translate primaryAssistant.operation}" />
+                        <Picker x:Name="OperationPicker" SelectedIndex="0" />
+                        <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
+                            <VerticalStackLayout Spacing="6">
+                                <Label Text="{loc:Translate primaryAssistant.firstNumber}" />
+                                <Entry
+                                    x:Name="LeftOperandEntry"
+                                    Keyboard="Numeric"
+                                    MaxLength="4"
+                                    Placeholder="{loc:Translate primaryAssistant.numberPlaceholder}" />
+                            </VerticalStackLayout>
+                            <VerticalStackLayout Grid.Column="1" Spacing="6">
+                                <Label Text="{loc:Translate primaryAssistant.secondNumber}" />
+                                <Entry
+                                    x:Name="RightOperandEntry"
+                                    Keyboard="Numeric"
+                                    MaxLength="4"
+                                    Placeholder="{loc:Translate primaryAssistant.numberPlaceholder}" />
+                            </VerticalStackLayout>
+                        </Grid>
+                        <Label
+                            x:Name="SetupFeedback"
+                            IsVisible="False"
+                            TextColor="{DynamicResource Error}" />
+                        <Button
+                            Clicked="OnStartClicked"
+                            Text="{loc:Translate primaryAssistant.start}" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <VerticalStackLayout
+                    x:Name="GuidancePanel"
+                    IsVisible="False"
+                    Spacing="16">
+                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+                        <Label
+                            x:Name="StepIndicator"
+                            FontAttributes="Bold"
+                            TextColor="{DynamicResource Primary}"
+                            VerticalTextAlignment="Center" />
+                        <Button
+                            Grid.Column="1"
+                            Clicked="OnChangeOperationClicked"
+                            Style="{StaticResource SecondaryButton}"
+                            Text="{loc:Translate primaryAssistant.changeOperation}" />
+                    </Grid>
+
+                    <controls:GuidedWrittenCalculationView
+                        x:Name="GuidedCalculation"
+                        CalculationCompleted="OnCalculationCompleted"
+                        ProgressChanged="OnCalculationProgressChanged" />
+
+                    <Label
+                        x:Name="GuidanceMessage"
+                        FontAttributes="Bold"
+                        HorizontalTextAlignment="Center"
+                        Text="{loc:Translate primaryAssistant.activeCell}"
+                        TextColor="{DynamicResource Primary}" />
+
+                    <Grid
+                        x:Name="CompletionActions"
+                        IsVisible="False"
+                        ColumnDefinitions="*,Auto"
+                        ColumnSpacing="12">
+                        <Label
+                            FontAttributes="Bold"
+                            FontSize="20"
+                            Text="{loc:Translate primaryAssistant.completedTitle}"
+                            TextColor="{DynamicResource Success}"
+                            VerticalTextAlignment="Center" />
+                        <Button
+                            Grid.Column="1"
+                            Clicked="OnChangeOperationClicked"
+                            Text="{loc:Translate primaryAssistant.newOperation}" />
+                    </Grid>
+                </VerticalStackLayout>
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

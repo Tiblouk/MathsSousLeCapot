@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="MathsSousLeCapot.App.Features.Assessments.ClassAssessmentPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:loc="clr-namespace:MathsSousLeCapot.App.Localization">
+    <ScrollView>
+        <VerticalStackLayout MaximumWidthRequest="820" Padding="24,28,24,40" Spacing="18">
+            <Button Clicked="OnBackToCoursesClicked" HorizontalOptions="Start" Style="{StaticResource SecondaryButton}" Text="{loc:Translate navigation.courseList}" />
+            <Label x:Name="TitleLabel" Style="{StaticResource PageTitle}" />
+            <Label x:Name="IntroLabel" TextColor="{DynamicResource TextSecondary}" />
+            <Label FontSize="13" Text="{loc:Translate answer.acceptedFormats}" TextColor="{DynamicResource TextSecondary}" />
+            <Border x:Name="SetupPanel" Style="{StaticResource Card}">
+                <VerticalStackLayout Spacing="12">
+                    <Label FontAttributes="Bold" Text="{loc:Translate assessment.class.cardTitle}" />
+                    <Label Text="{loc:Translate assessment.class.cardSummary}" TextColor="{DynamicResource TextSecondary}" />
+                    <Button Clicked="OnStartClicked" Text="{loc:Translate actions.start}" />
+                </VerticalStackLayout>
+            </Border>
+            <VerticalStackLayout x:Name="QuestionsPanel" IsVisible="False" Spacing="12" />
+            <Button x:Name="VerifyButton" Clicked="OnVerifyClicked" IsVisible="False" Text="{loc:Translate actions.checkAnswers}" />
+            <VerticalStackLayout x:Name="SummaryPanel" IsVisible="False" Spacing="12">
+                <Label x:Name="ScoreLabel" Style="{StaticResource SectionTitle}" />
+                <Border Style="{StaticResource Card}">
+                    <VerticalStackLayout Spacing="12">
+                        <Label FontAttributes="Bold" FontSize="18" Text="{loc:Translate assessment.class.masteryTitle}" />
+                        <Label FontAttributes="Bold" Text="{loc:Translate assessment.class.mastered}" TextColor="{DynamicResource Success}" />
+                        <VerticalStackLayout x:Name="MasteredList" Spacing="6" />
+                        <Label FontAttributes="Bold" Text="{loc:Translate assessment.class.review}" TextColor="{DynamicResource Error}" />
+                        <VerticalStackLayout x:Name="ReviewList" Spacing="6" />
+                    </VerticalStackLayout>
+                </Border>
+                <VerticalStackLayout x:Name="ResultsList" Spacing="10" />
+                <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
+                    <Button Clicked="OnQuitClicked" Style="{StaticResource SecondaryButton}" Text="{loc:Translate navigation.quit}" />
+                    <Button Grid.Column="1" Clicked="OnStartClicked" Text="{loc:Translate assessment.class.retry}" />
+                </Grid>
+            </VerticalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

@@ -1,0 +1,6 @@
+{
+  "id": "positional-counter",
+  "title": "Le compteur positionnel",
+  "bases": [2, 10],
+  "steps": []
+}

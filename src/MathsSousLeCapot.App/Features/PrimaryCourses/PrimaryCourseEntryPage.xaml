@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="MathsSousLeCapot.App.Features.PrimaryCourses.PrimaryCourseEntryPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    <ScrollView>
+        <VerticalStackLayout
+            MaximumWidthRequest="760"
+            Padding="24,28,24,40"
+            Spacing="20">
+            <Button
+                x:Name="BackButton"
+                Clicked="OnBackToCoursesClicked"
+                HorizontalOptions="Start"
+                Style="{StaticResource SecondaryButton}" />
+            <Label
+                x:Name="BadgeLabel"
+                FontAttributes="Bold"
+                FontSize="13"
+                TextColor="{DynamicResource Primary}" />
+            <Label x:Name="TitleLabel" Style="{StaticResource PageTitle}" />
+
+            <Border Style="{StaticResource Card}">
+                <VerticalStackLayout Spacing="14">
+                    <Label x:Name="ObjectiveHeading" Style="{StaticResource SectionTitle}" />
+                    <Label x:Name="ObjectiveLabel" FontSize="17" />
+                    <Label x:Name="ExampleLabel" FontAttributes="Bold" FontSize="24" />
+                    <Label x:Name="SummaryHeading" Style="{StaticResource SectionTitle}" />
+                    <Label x:Name="SummaryLabel" />
+                    <VerticalStackLayout x:Name="PrerequisitePanel" Spacing="8">
+                        <Label x:Name="PrerequisiteHeading" Style="{StaticResource SectionTitle}" />
+                        <Button
+                            x:Name="PrerequisiteButton"
+                            Clicked="OnPrerequisiteClicked"
+                            HorizontalOptions="Start"
+                            Style="{StaticResource SecondaryButton}" />
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+            </Border>
+
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
+                <Button x:Name="ReadButton" Clicked="OnReadCourseClicked" />
+                <Button
+                    x:Name="TrainButton"
+                    Grid.Column="1"
+                    Clicked="OnTrainClicked"
+                    Style="{StaticResource SecondaryButton}" />
+            </Grid>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

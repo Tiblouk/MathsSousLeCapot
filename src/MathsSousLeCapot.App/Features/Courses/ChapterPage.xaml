@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="MathsSousLeCapot.App.Features.Courses.ChapterPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:loc="clr-namespace:MathsSousLeCapot.App.Localization"
+    Title="{loc:Translate app.title}">
+    <ScrollView>
+        <VerticalStackLayout
+            MaximumWidthRequest="900"
+            Padding="24,28,24,40"
+            Spacing="22">
+            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+                <Label Style="{StaticResource PageTitle}" Text="{loc:Translate app.title}" />
+                <Button
+                    Grid.Column="1"
+                    Clicked="OnOpenSettingsClicked"
+                    Style="{StaticResource SecondaryButton}"
+                    Text="{loc:Translate actions.settings}" />
+            </Grid>
+            <VerticalStackLayout x:Name="CoursesPanel" Spacing="18" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

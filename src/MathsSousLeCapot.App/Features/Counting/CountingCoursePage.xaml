@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="MathsSousLeCapot.App.Features.Counting.CountingCoursePage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:loc="clr-namespace:MathsSousLeCapot.App.Localization"
+    Title="{loc:Translate course.counting.pageTitle}">
+    <Grid RowDefinitions="*,Auto">
+        <ScrollView>
+            <VerticalStackLayout
+                MaximumWidthRequest="820"
+                Padding="24,28"
+                Spacing="18">
+                <Button
+                    Clicked="OnBackToCoursesClicked"
+                    HorizontalOptions="Start"
+                    Style="{StaticResource SecondaryButton}"
+                    Text="{loc:Translate navigation.courseList}" />
+                <Label
+                    x:Name="StepIndicator"
+                    FontAttributes="Bold"
+                    FontSize="13"
+                    TextColor="{StaticResource Primary}" />
+                <Label x:Name="StepTitle" Style="{StaticResource PageTitle}" />
+                <Label x:Name="StepExplanation" FontSize="17" />
+
+                <Border Style="{StaticResource Card}">
+                    <VerticalStackLayout Spacing="8">
+                        <Label FontAttributes="Bold" Text="{loc:Translate common.example}" TextColor="{StaticResource Primary}" />
+                        <Label x:Name="StepExample" FontSize="16" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <Border
+                    x:Name="NumberExplorer"
+                    IsVisible="False"
+                    Style="{StaticResource Card}">
+                    <VerticalStackLayout Spacing="14">
+                        <Label
+                            x:Name="NumberDisplay"
+                            FontAttributes="Bold"
+                            FontSize="52"
+                            HorizontalTextAlignment="Center" />
+                        <Label
+                            x:Name="NumberWords"
+                            FontAttributes="Bold"
+                            FontSize="24"
+                            HorizontalTextAlignment="Center"
+                            TextColor="{StaticResource Primary}" />
+                        <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
+                            <Button Clicked="OnPreviousNumberClicked" Text="−1" />
+                            <Button Grid.Column="1" Clicked="OnNextNumberClicked" Text="+1" />
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+
+                <Border
+                    x:Name="FinalQuestionPanel"
+                    IsVisible="False"
+                    Style="{StaticResource Card}">
+                    <VerticalStackLayout Spacing="12">
+                        <Label FontAttributes="Bold" FontSize="18" Text="{loc:Translate course.counting.finalQuestion}" />
+                        <Label
+                            FontSize="13"
+                            Text="{loc:Translate answer.acceptedFormats}"
+                            TextColor="{DynamicResource TextSecondary}" />
+                        <Entry x:Name="FinalAnswer" Keyboard="Default" Placeholder="{loc:Translate common.answerPlaceholder}" />
+                        <Button Clicked="OnValidateAnswerClicked" Text="{loc:Translate actions.checkAnswer}" />
+                        <Border x:Name="AnswerFeedbackPanel" IsVisible="False">
+                            <VerticalStackLayout Spacing="4">
+                                <Label x:Name="AnswerFeedbackTitle" FontAttributes="Bold" FontSize="17" />
+                                <Label x:Name="AnswerFeedback" />
+                            </VerticalStackLayout>
+                        </Border>
+                    </VerticalStackLayout>
+                </Border>
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <Grid
+            Grid.Row="1"
+            BackgroundColor="{StaticResource Background}"
+            ColumnDefinitions="*,*"
+            ColumnSpacing="12"
+            Padding="24,14">
+            <Button
+                x:Name="PreviousButton"
+                Clicked="OnPreviousStepClicked"
+                Style="{StaticResource SecondaryButton}"
+                Text="{loc:Translate navigation.previous}" />
+            <Button
+                x:Name="NextButton"
+                Grid.Column="1"
+                Clicked="OnNextStepClicked"
+                Text="{loc:Translate navigation.next}" />
+        </Grid>
+    </Grid>
+</ContentPage>
