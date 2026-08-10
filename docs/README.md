@@ -24,6 +24,10 @@ pédagogiques.
    lycée.
 7. [`Philosophie de code.md`](Philosophie%20de%20code.md) : principes généraux
    de développement appliqués avec Codex.
+8. [`../LICENSE.md`](../LICENSE.md) : droits d'usage personnel, de modification,
+   de redistribution gratuite et conditions applicables aux organisations.
+9. [`../CONTRIBUTING.md`](../CONTRIBUTING.md) : règles de contribution et
+   formalisation des droits avant intégration au projet officiel.
 
 ## Sources de vérité
 
@@ -36,6 +40,9 @@ pédagogiques.
 | Packaging Windows portable | [`packaging-windows.md`](packaging-windows.md) |
 | Progression et contenu pédagogique | [`cours.md`](cours.md) et [`cours_avancer.md`](cours_avancer.md) |
 | Conventions générales de code | [`Philosophie de code.md`](Philosophie%20de%20code.md) |
+| Licence et droits d'utilisation | [`../LICENSE.md`](../LICENSE.md) |
+| Licences professionnelles et organisationnelles | [`../COMMERCIAL-LICENSING.md`](../COMMERCIAL-LICENSING.md) |
+| Contributions et cession des droits | [`../CONTRIBUTING.md`](../CONTRIBUTING.md) et [`legal/CONTRIBUTOR-ASSIGNMENT-AGREEMENT.md`](legal/CONTRIBUTOR-ASSIGNMENT-AGREEMENT.md) |
 | Bugs suivis | [`bugs.md`](bugs.md) |
 | Idées non engagées | [`idées.md`](id%C3%A9es.md) |
 | Comportement exécutable | `src/` et `tests/` |
@@ -55,6 +62,10 @@ implémenté.
   le code, avec ses contraintes et ses points d'extension.
 - le `README.md` racine reste une porte d'entrée courte pour construire et
   lancer l'application.
+- `LICENSE.md` définit les autorisations accordées au public et réserve les
+  usages professionnels, organisationnels et commerciaux ;
+- `CONTRIBUTING.md` et le modèle placé dans `docs/legal/` encadrent l'intégration
+  de code tiers à la version officielle.
 
 ### Documents pédagogiques
 
@@ -89,6 +100,8 @@ Une modification doit mettre à jour :
   pédagogique ;
 - `packaging-windows.md` lorsqu'elle change la production ou le contenu de
   l'archive portable.
+- les documents juridiques lorsqu'elle change les droits d'utilisation, de
+  redistribution, de contribution ou de commercialisation.
 
 Chaque affirmation de compatibilité ou de fonctionnement doit préciser ce qui
 a été vérifié. Une compilation réussie ne remplace pas un essai sur un appareil

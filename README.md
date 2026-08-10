@@ -6,6 +6,20 @@ mécanismes mathématiques par la manipulation et la visualisation.
 L'application fonctionne hors connexion et ne nécessite ni compte, ni serveur,
 ni abonnement.
 
+## Licence
+
+Une personne physique peut utiliser et modifier gratuitement l'application dans
+un cadre personnel. Elle peut publier gratuitement sa version modifiée, à
+condition de citer le projet et de ne pas la monétiser. Toute utilisation
+professionnelle ou réalisée pour le compte d'une école, d'une entreprise, d'une
+association, d'une administration ou d'une autre organisation nécessite une
+licence payante préalable.
+
+Les conditions complètes figurent dans [`LICENSE.md`](LICENSE.md). Les demandes
+professionnelles et organisationnelles sont expliquées dans
+[`COMMERCIAL-LICENSING.md`](COMMERCIAL-LICENSING.md). Les contributions au dépôt
+officiel suivent [`CONTRIBUTING.md`](CONTRIBUTING.md).
+
 ## Documentation
 
 Le point d'entrée de la documentation de conception et de maintenance est

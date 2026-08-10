@@ -52,6 +52,10 @@ Compatibilite visee :
 - Windows 10 64 bits
 - Windows 11 64 bits
 
+Licence :
+- Consultez LICENSE.md avant toute utilisation ou redistribution.
+- Une organisation ou un professionnel doit obtenir une licence payante.
+
 Si Windows bloque l'application au premier lancement, ouvrez les proprietes du fichier ZIP ou de l'executable et choisissez Debloquer, puis relancez.
 "@ | Set-Content -LiteralPath $Path -Encoding UTF8
 }
@@ -81,6 +85,10 @@ if ($LASTEXITCODE -ne 0) {
 Write-Host "Preparation du dossier portable..."
 New-Item -ItemType Directory -Path $PortableDirectory | Out-Null
 Copy-Item -Path (Join-Path $PublishDirectory "*") -Destination $PortableDirectory -Recurse -Force
+
+# La licence accompagne chaque distribution officielle de l'application.
+Copy-Item -LiteralPath (Join-Path $RepositoryRoot "LICENSE.md") -Destination $PortableDirectory -Force
+Copy-Item -LiteralPath (Join-Path $RepositoryRoot "COMMERCIAL-LICENSING.md") -Destination $PortableDirectory -Force
 
 $DataDirectory = Join-Path $PortableDirectory "Data"
 New-Item -ItemType Directory -Path $DataDirectory | Out-Null

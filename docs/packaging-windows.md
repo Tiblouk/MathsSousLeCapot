@@ -18,6 +18,9 @@ Le script produit :
 artifacts/windows-portable/MathsSousLeCapot-Windows-Portable-1.0.0.zip
 ```
 
+L'archive contient également `LICENSE.md` et `COMMERCIAL-LICENSING.md` afin que
+les conditions d'utilisation accompagnent l'exécutable distribué.
+
 ## Utilisation côté utilisateur
 
 L'utilisateur doit seulement :
