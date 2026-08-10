@@ -6,6 +6,13 @@ mécanismes mathématiques par la manipulation et la visualisation.
 L'application fonctionne hors connexion et ne nécessite ni compte, ni serveur,
 ni abonnement.
 
+## Documentation
+
+Le point d'entrée de la documentation de conception et de maintenance est
+[`docs/README.md`](docs/README.md). Il indique l'ordre de lecture, la source de
+vérité de chaque sujet et renvoie notamment vers l'état réel du projet et son
+architecture actuelle.
+
 ## État actuel
 
 Le niveau **Fondations** contient actuellement :
