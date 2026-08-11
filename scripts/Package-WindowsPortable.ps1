@@ -55,6 +55,7 @@ Compatibilite visee :
 Licence :
 - Consultez LICENSE.md avant toute utilisation ou redistribution.
 - Une organisation ou un professionnel doit obtenir une licence payante.
+- Les licences des composants externes figurent dans THIRD-PARTY-NOTICES.txt.
 
 Si Windows bloque l'application au premier lancement, ouvrez les proprietes du fichier ZIP ou de l'executable et choisissez Debloquer, puis relancez.
 "@ | Set-Content -LiteralPath $Path -Encoding UTF8
@@ -89,6 +90,7 @@ Copy-Item -Path (Join-Path $PublishDirectory "*") -Destination $PortableDirector
 # La licence accompagne chaque distribution officielle de l'application.
 Copy-Item -LiteralPath (Join-Path $RepositoryRoot "LICENSE.md") -Destination $PortableDirectory -Force
 Copy-Item -LiteralPath (Join-Path $RepositoryRoot "COMMERCIAL-LICENSING.md") -Destination $PortableDirectory -Force
+Copy-Item -LiteralPath (Join-Path $RepositoryRoot "THIRD-PARTY-NOTICES.txt") -Destination $PortableDirectory -Force
 
 $DataDirectory = Join-Path $PortableDirectory "Data"
 New-Item -ItemType Directory -Path $DataDirectory | Out-Null

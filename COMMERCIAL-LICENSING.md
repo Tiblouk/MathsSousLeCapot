@@ -56,5 +56,5 @@ la conclusion d'un accord écrit.
 Pour demander une licence ou présenter un projet d'utilisation :
 
 - Yamine Kebaili ;
-- yamine.kebaili@cpe.fr ;
+- Yamine.Kebaili@outlook.fr ;
 - https://github.com/Tiblouk/MathsSousLeCapot

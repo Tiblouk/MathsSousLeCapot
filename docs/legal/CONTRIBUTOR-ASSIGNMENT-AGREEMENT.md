@@ -13,7 +13,7 @@ Version de travail 1.0 - 10 août 2026
 
 - Nom : Yamine Kebaili
 - Projet : Maths Sous le capot
-- Adresse électronique : yamine.kebaili@cpe.fr
+- Adresse électronique : Yamine.Kebaili@outlook.fr
 
 **Le Contributeur**
 

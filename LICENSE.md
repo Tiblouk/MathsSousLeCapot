@@ -123,7 +123,7 @@ Le Titulaire peut accorder séparément des droits professionnels,
 organisationnels ou commerciaux selon des conditions et une redevance définies
 par écrit. Ces droits ne résultent jamais de la présente licence personnelle.
 
-Les demandes doivent être adressées à : yamine.kebaili@cpe.fr
+Les demandes doivent être adressées à : Yamine.Kebaili@outlook.fr
 
 Des informations complémentaires sont disponibles dans
 `COMMERCIAL-LICENSING.md`.

@@ -34,6 +34,10 @@
     <MauiImage Include="Resources\Images\*" Exclude="Resources\Images\.gitkeep" />
     <MauiFont Include="Resources\Fonts\*" Exclude="Resources\Fonts\.gitkeep" />
     <MauiAsset Include="Resources\Raw\**" Exclude="Resources\Raw\lang\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
+    <MauiAsset Include="..\..\THIRD-PARTY-NOTICES.txt"
+               Link="Resources\Raw\THIRD-PARTY-NOTICES.txt"
+               LogicalName="THIRD-PARTY-NOTICES.txt"
+               Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'" />
     <EmbeddedResource Include="Resources\Raw\lang\**\*.json" />
   </ItemGroup>
 

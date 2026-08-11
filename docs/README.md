@@ -43,6 +43,7 @@ pédagogiques.
 | Licence et droits d'utilisation | [`../LICENSE.md`](../LICENSE.md) |
 | Licences professionnelles et organisationnelles | [`../COMMERCIAL-LICENSING.md`](../COMMERCIAL-LICENSING.md) |
 | Contributions et cession des droits | [`../CONTRIBUTING.md`](../CONTRIBUTING.md) et [`legal/CONTRIBUTOR-ASSIGNMENT-AGREEMENT.md`](legal/CONTRIBUTOR-ASSIGNMENT-AGREEMENT.md) |
+| Composants tiers et leurs licences | [`../THIRD-PARTY-NOTICES.txt`](../THIRD-PARTY-NOTICES.txt) et [`legal/third-party-audit.md`](legal/third-party-audit.md) |
 | Bugs suivis | [`bugs.md`](bugs.md) |
 | Idées non engagées | [`idées.md`](id%C3%A9es.md) |
 | Comportement exécutable | `src/` et `tests/` |
@@ -102,6 +103,8 @@ Une modification doit mettre à jour :
   l'archive portable.
 - les documents juridiques lorsqu'elle change les droits d'utilisation, de
   redistribution, de contribution ou de commercialisation.
+- `THIRD-PARTY-NOTICES.txt` et son audit après toute modification de .NET, des
+  workloads, des packages ou des ressources externes.
 
 Chaque affirmation de compatibilité ou de fonctionnement doit préciser ce qui
 a été vérifié. Une compilation réussie ne remplace pas un essai sur un appareil

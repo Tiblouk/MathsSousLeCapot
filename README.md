@@ -6,6 +6,14 @@ mécanismes mathématiques par la manipulation et la visualisation.
 L'application fonctionne hors connexion et ne nécessite ni compte, ni serveur,
 ni abonnement.
 
+## Développement assisté par IA
+
+Le projet est conçu et dirigé par Yamine Kebaili. Son développement a été
+réalisé avec l'aide d'outils d'intelligence artificielle, notamment ChatGPT et
+Codex d'OpenAI. Ces outils ont participé à la rédaction, à l'implémentation, à
+la documentation et à la vérification du code sous la direction du responsable
+du projet.
+
 ## Licence
 
 Une personne physique peut utiliser et modifier gratuitement l'application dans
@@ -19,6 +27,10 @@ Les conditions complètes figurent dans [`LICENSE.md`](LICENSE.md). Les demandes
 professionnelles et organisationnelles sont expliquées dans
 [`COMMERCIAL-LICENSING.md`](COMMERCIAL-LICENSING.md). Les contributions au dépôt
 officiel suivent [`CONTRIBUTING.md`](CONTRIBUTING.md).
+
+Les composants externes conservent leurs propres licences et sont recensés dans
+[`THIRD-PARTY-NOTICES.txt`](THIRD-PARTY-NOTICES.txt). Cette notice doit
+accompagner toute distribution de l'application.
 
 ## Documentation
 
