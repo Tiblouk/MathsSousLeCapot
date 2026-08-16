@@ -15,7 +15,7 @@ Depuis la racine de la solution :
 Le script produit :
 
 ```text
-artifacts/windows-portable/MathsSousLeCapot-Windows-Portable-1.0.0.zip
+artifacts/windows-portable/MathsSousLeCapot-Windows-Portable-0.1.0.zip
 ```
 
 L'archive contient également `LICENSE.md`, `COMMERCIAL-LICENSING.md` et

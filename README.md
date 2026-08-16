@@ -270,7 +270,7 @@ Pour produire une archive ZIP lançable sans terminal par l'utilisateur final :
 L'archive est créée dans :
 
 ```text
-artifacts/windows-portable/MathsSousLeCapot-Windows-Portable-1.0.0.zip
+artifacts/windows-portable/MathsSousLeCapot-Windows-Portable-0.1.0.zip
 ```
 
 Après extraction, l'utilisateur lance simplement `MathsSousLeCapot.exe`.
