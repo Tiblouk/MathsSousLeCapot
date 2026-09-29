@@ -6,6 +6,14 @@ namespace MathsSousLeCapot.Core.Courses;
 public static class SchoolGroupCatalog
 {
     /// <summary>
+    /// Identifiants stables des grands ensembles scolaires.
+    /// </summary>
+    public const string FoundationsGroupId = "foundations";
+    public const string PrimarySchoolGroupId = "primary-school";
+    public const string MiddleSchoolGroupId = "middle-school";
+    public const string HighSchoolGroupId = "high-school";
+
+    /// <summary>
     /// Clés des niveaux scolaires qui ne sont pas portés par un autre catalogue.
     /// </summary>
     public const string FoundationsLevel = "chapter.level.bases";
@@ -23,12 +31,12 @@ public static class SchoolGroupCatalog
     public static IReadOnlyList<SchoolGroupDefinition> Definitions { get; } =
     [
         new(
-            "foundations",
+            FoundationsGroupId,
             "chapter.group.foundations",
             0,
             [FoundationsLevel]),
         new(
-            "primary-school",
+            PrimarySchoolGroupId,
             "chapter.group.primarySchool",
             1,
             [
@@ -39,12 +47,12 @@ public static class SchoolGroupCatalog
                 PrimaryCourseCatalog.Cm2Level
             ]),
         new(
-            "middle-school",
+            MiddleSchoolGroupId,
             "chapter.group.middleSchool",
             2,
             [SixthLevel, FifthLevel, FourthLevel, ThirdLevel]),
         new(
-            "high-school",
+            HighSchoolGroupId,
             "chapter.group.highSchool",
             3,
             [SecondLevel, FirstLevel, TerminalLevel])

@@ -2,7 +2,7 @@
 param(
     [string]$Configuration = "Release",
     [string]$RuntimeIdentifier = "win-x64",
-    [string]$Version = "0.1.0",
+    [string]$Version = "0.1.1",
     [switch]$KeepPublishDirectory
 )
 
@@ -45,7 +45,7 @@ Utilisation :
 2. Lancez MathsSousLeCapot.exe.
 
 Donnees utilisateur :
-- Les reglages, la progression et l'historique sont stockes dans le dossier Data.
+- Les reglages, les profils, la progression et l'historique sont stockes dans le dossier Data.
 - Pour sauvegarder ou deplacer l'application, copiez tout le dossier, y compris Data.
 
 Compatibilite visee :
@@ -98,8 +98,10 @@ New-ReadmeFile -Path (Join-Path $PortableDirectory "Lisez-moi.txt")
 Set-Content -LiteralPath (Join-Path $DataDirectory "README.txt") -Encoding UTF8 -Value @"
 Ce dossier contient les donnees utilisateur de la version portable :
 - settings.json
-- course_progress.json
-- training_history.json
+- profiles.json
+- Profiles\<id>\course_progress.json
+- Profiles\<id>\training_history.json
+- Profiles\<id>\perfect_achievements.json
 
 Il peut etre sauvegarde ou copie avec l'application.
 "@

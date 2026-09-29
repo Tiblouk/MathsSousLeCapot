@@ -8,6 +8,9 @@ using MathsSousLeCapot.App.Features.MiddleSchool;
 using MathsSousLeCapot.App.Features.PositionalCounter;
 using MathsSousLeCapot.App.Features.PrimaryCourses;
 using MathsSousLeCapot.App.Features.Settings;
+using MathsSousLeCapot.App.Features.Progress;
+using MathsSousLeCapot.App.Features.Profiles;
+using MathsSousLeCapot.App.Features.Challenges;
 using MathsSousLeCapot.Core.Courses;
 
 namespace MathsSousLeCapot.App.Services;
@@ -48,6 +51,9 @@ public static class NavigationService
         Register<FoundationNumberTrainingPage>();
         Register<ClassAssessmentPage>();
         Register<SettingsPage>();
+        Register<ProgressPage>();
+        Register<ProfilesPage>();
+        Register<ChallengesPage>();
     }
 
     /// <summary>

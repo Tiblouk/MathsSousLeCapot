@@ -5,9 +5,10 @@ faire évoluer **Maths Sous le capot**. Il distingue volontairement la vision du
 produit, l'état réellement vérifié, l'architecture technique et les contenus
 pédagogiques.
 
-**Dernier audit documentaire :** 10 août 2026
+**Dernier audit documentaire :** 29 septembre 2026
 
-**Point de référence du code :** commit Git `4d0b935`
+**Point de référence du code :** version `0.1.1`, publiée sous le tag Git
+`v0.1.1`.
 
 ## Ordre de lecture conseillé
 
@@ -28,6 +29,7 @@ pédagogiques.
    de redistribution gratuite et conditions applicables aux organisations.
 9. [`../CONTRIBUTING.md`](../CONTRIBUTING.md) : règles de contribution et
    formalisation des droits avant intégration au projet officiel.
+10. [`../CHANGELOG.md`](../CHANGELOG.md) : contenu des versions publiées.
 
 ## Sources de vérité
 
@@ -37,6 +39,7 @@ pédagogiques.
 | État fonctionnel actuel | [`etat-du-projet.md`](etat-du-projet.md) |
 | Architecture implémentée | [`architecture.md`](architecture.md) |
 | Commandes de développement | [`../README.md`](../README.md) |
+| Historique des versions | [`../CHANGELOG.md`](../CHANGELOG.md) |
 | Packaging Windows portable | [`packaging-windows.md`](packaging-windows.md) |
 | Progression et contenu pédagogique | [`cours.md`](cours.md) et [`cours_avancer.md`](cours_avancer.md) |
 | Conventions générales de code | [`Philosophie de code.md`](Philosophie%20de%20code.md) |
@@ -45,7 +48,7 @@ pédagogiques.
 | Contributions et cession des droits | [`../CONTRIBUTING.md`](../CONTRIBUTING.md) et [`legal/CONTRIBUTOR-ASSIGNMENT-AGREEMENT.md`](legal/CONTRIBUTOR-ASSIGNMENT-AGREEMENT.md) |
 | Composants tiers et leurs licences | [`../THIRD-PARTY-NOTICES.txt`](../THIRD-PARTY-NOTICES.txt) et [`legal/third-party-audit.md`](legal/third-party-audit.md) |
 | Bugs suivis | [`bugs.md`](bugs.md) |
-| Idées non engagées | [`idées.md`](id%C3%A9es.md) |
+| Idées et suivi de leur réalisation | [`idées.md`](id%C3%A9es.md) |
 | Comportement exécutable | `src/` et `tests/` |
 
 En cas de contradiction sur une fonctionnalité déjà développée, le code et les
@@ -81,8 +84,8 @@ quantités et fonctionnalités effectivement présentes.
 ### Documents de suivi
 
 - `bugs.md` doit contenir les défauts confirmés et reproductibles ;
-- `idées.md` doit contenir les propositions qui ne sont pas encore des
-  engagements du projet.
+- `idées.md` conserve les propositions, leur état et leur devenir sans les
+  confondre avec les engagements décrits dans `projet.md`.
 
 Un fichier vide est ambigu. Lors de la prochaine phase documentaire, ces deux
 fichiers recevront un modèle explicite permettant d'indiquer soit les éléments

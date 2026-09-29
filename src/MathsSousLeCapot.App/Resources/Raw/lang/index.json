@@ -8,7 +8,8 @@
       "supplements": [
         "primary/fr_FR.json",
         "primary-assistant/fr_FR.json",
-        "highschool/fr_FR.json"
+        "highschool/fr_FR.json",
+        "progress/fr_FR.json"
       ]
     },
     {
@@ -18,7 +19,8 @@
       "supplements": [
         "primary/en_US.json",
         "primary-assistant/en_US.json",
-        "highschool/en_US.json"
+        "highschool/en_US.json",
+        "progress/en_US.json"
       ]
     },
     {
@@ -28,7 +30,8 @@
       "supplements": [
         "primary/ja_JP.json",
         "primary-assistant/ja_JP.json",
-        "highschool/ja_JP.json"
+        "highschool/ja_JP.json",
+        "progress/ja_JP.json"
       ]
     },
     {
@@ -38,7 +41,8 @@
       "supplements": [
         "primary/es_ES.json",
         "primary-assistant/es_ES.json",
-        "highschool/es_ES.json"
+        "highschool/es_ES.json",
+        "progress/es_ES.json"
       ]
     },
     {
@@ -48,7 +52,8 @@
       "supplements": [
         "primary/it_IT.json",
         "primary-assistant/it_IT.json",
-        "highschool/it_IT.json"
+        "highschool/it_IT.json",
+        "progress/it_IT.json"
       ]
     }
   ]

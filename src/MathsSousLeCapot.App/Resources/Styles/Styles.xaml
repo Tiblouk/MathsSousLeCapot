@@ -20,6 +20,11 @@
         <Setter Property="TextColor" Value="{DynamicResource TextPrimary}" />
         <Setter Property="PlaceholderColor" Value="{DynamicResource TextSecondary}" />
     </Style>
+    <Style TargetType="SearchBar">
+        <Setter Property="BackgroundColor" Value="{DynamicResource ControlBackground}" />
+        <Setter Property="TextColor" Value="{DynamicResource TextPrimary}" />
+        <Setter Property="PlaceholderColor" Value="{DynamicResource TextSecondary}" />
+    </Style>
     <Style TargetType="Picker">
         <Setter Property="BackgroundColor" Value="{DynamicResource ControlBackground}" />
         <Setter Property="TextColor" Value="{DynamicResource TextPrimary}" />

@@ -12,6 +12,10 @@
     <Color x:Key="TextSecondary">#626A72</Color>
     <Color x:Key="Border">#D5D9DD</Color>
     <Color x:Key="ExplanationBackground">#F0F3F5</Color>
+    <Color x:Key="CourseRead">#1D5FA7</Color>
+    <Color x:Key="CourseReadBackground">#E7F1FC</Color>
+    <Color x:Key="CourseMasteredHard">#7A5A00</Color>
+    <Color x:Key="CourseMasteredHardBackground">#FFF2BF</Color>
     <Color x:Key="Success">#19713D</Color>
     <Color x:Key="SuccessBackground">#E5F5EB</Color>
     <Color x:Key="Error">#B3261E</Color>

@@ -25,6 +25,13 @@ public sealed class ThemeService
         SetColor(resources, "TextSecondary", palette.TextSecondary);
         SetColor(resources, "Border", palette.Border);
         SetColor(resources, "ExplanationBackground", palette.ExplanationBackground);
+        SetColor(resources, "CourseRead", palette.CourseRead);
+        SetColor(resources, "CourseReadBackground", palette.CourseReadBackground);
+        SetColor(resources, "CourseMasteredHard", palette.CourseMasteredHard);
+        SetColor(
+            resources,
+            "CourseMasteredHardBackground",
+            palette.CourseMasteredHardBackground);
         SetColor(resources, "Success", palette.Success);
         SetColor(resources, "SuccessBackground", palette.SuccessBackground);
         SetColor(resources, "Error", palette.Error);

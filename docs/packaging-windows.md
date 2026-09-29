@@ -15,7 +15,7 @@ Depuis la racine de la solution :
 Le script produit :
 
 ```text
-artifacts/windows-portable/MathsSousLeCapot-Windows-Portable-0.1.0.zip
+artifacts/windows-portable/MathsSousLeCapot-Windows-Portable-0.1.1.zip
 ```
 
 L'archive contient également `LICENSE.md`, `COMMERCIAL-LICENSING.md` et
@@ -39,7 +39,9 @@ Il contient les fichiers sauvegardables :
 
 - `settings.json` ;
 - `course_progress.json` ;
-- `training_history.json`.
+- `training_history.json` ;
+- `perfect_achievements.json`, résumé compact des sessions sans faute utilisé
+  pour afficher les badges sans charger tout l'historique.
 
 Pour sauvegarder ou déplacer l'application portable, il suffit de copier le
 dossier extrait complet, y compris `Data`.

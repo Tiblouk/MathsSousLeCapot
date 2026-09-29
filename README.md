@@ -101,6 +101,28 @@ boutons des grands ensembles. Les classes sont préparées à l'ouverture de leu
 ensemble, les objets de cours à l'ouverture d'une classe et les cartes
 graphiques à l'ouverture d'une catégorie.
 
+Une recherche locale permet de retrouver un cours par son titre, sa notion, sa
+classe, sa catégorie ou ses tags. Son index ne contient que les métadonnées : le
+contenu pédagogique reste chargé uniquement après l'ouverture du cours.
+
+Plusieurs profils peuvent partager le même appareil sans créer de compte.
+Chaque profil possède sa progression, son historique d'entraînement, six défis
+locaux et son propre score. L'écran **Mon parcours** affiche les statistiques et
+charge l'historique progressivement. Le classement des scores reste strictement
+local et aucune donnée n'est envoyée sur Internet.
+
+Les cartes de cours indiquent aussi le meilleur état atteint par une couleur et
+un badge textuel : bleu pour un cours lu, vert pour une session sans faute et
+or pour une session sans faute en difficulté élevée. Le résumé des badges est
+séparé de l'historique détaillé afin que le menu n'ait pas à charger les
+exercices déjà réalisés.
+
+Une session d'entraînement vérifiée rapporte des points une seule fois par cours
+et par difficulté. La base vaut `1` point en Fondations/Primaire, `3` au Collège
+et `5` au Lycée ; la difficulté ajoute respectivement `0`, `1` ou `3` points en
+facile, modéré ou difficile. Refaire le même niveau de difficulté ne permet donc
+pas d'accumuler des points.
+
 Chaque classe disponible propose aussi une section **Contrôles intermédiaires**.
 La première version fournit un contrôle général généré au démarrage de la
 tentative, à partir des cours disponibles dans la classe ouverte. Les questions
@@ -110,7 +132,9 @@ une correction et un bilan des notions maîtrisées ou à revoir.
 Une archive Windows portable peut être générée avec
 `.\scripts\Package-WindowsPortable.ps1`. Elle contient un exécutable
 `MathsSousLeCapot.exe` lançable après décompression, ainsi qu'un dossier `Data`
-où sont stockés les paramètres, la progression et l'historique.
+où sont stockés les paramètres et le registre des profils. La progression et
+l'historique, ainsi que le résumé léger des badges, sont isolés sous
+`Data/Profiles/<id>/`.
 
 Les cours de mesure concernés affichent un tableau commun des longueurs, masses,
 litres et aires. Il distingue les conversions par `10` des conversions d'aires
@@ -185,9 +209,12 @@ MathsSousLeCapot/
 ├── src/
 │   ├── MathsSousLeCapot.App/        Interface .NET MAUI
 │   │   ├── Features/                Modules pédagogiques
+│   │   │   ├── Challenges/          Défis et classement local
 │   │   │   ├── FoundationNumbers/   Nombres négatifs et décimaux
 │   │   │   ├── HighSchool/          Pages génériques des cours du lycée
 │   │   │   ├── MiddleSchool/        Pages génériques des cours du collège
+│   │   │   ├── Profiles/            Gestion des profils locaux
+│   │   │   ├── Progress/            Parcours et historique
 │   │   ├── Controls/                Contrôles visuels réutilisables
 │   │   ├── Localization/            Chargement des traductions JSON
 │   │   ├── Resources/Raw/lang/      Catalogues de langue et modules traduits
@@ -270,7 +297,7 @@ Pour produire une archive ZIP lançable sans terminal par l'utilisateur final :
 L'archive est créée dans :
 
 ```text
-artifacts/windows-portable/MathsSousLeCapot-Windows-Portable-0.1.0.zip
+artifacts/windows-portable/MathsSousLeCapot-Windows-Portable-0.1.1.zip
 ```
 
 Après extraction, l'utilisateur lance simplement `MathsSousLeCapot.exe`.
@@ -294,6 +321,10 @@ Les tests couvrent notamment :
 - les additions et soustractions sur les nombres naturels ;
 - l'ordre pédagogique des cours ;
 - la robustesse de la sérialisation locale ;
+- l'index de recherche et ses tags ;
+- les règles de gestion des profils locaux ;
+- le calcul des statistiques, défis et scores ;
+- la priorité des badges de cours et l'absence de points répétés ;
 - la validité des catalogues et de leurs paramètres de formatage.
 
 ## Traductions JSON
@@ -308,18 +339,17 @@ src/MathsSousLeCapot.App/Resources/Raw/lang/
 ├── fr_FR.json
 ├── it_IT.json
 ├── ja_JP.json
-└── primary/
-    ├── en_US.json
-    ├── es_ES.json
-    ├── fr_FR.json
-    ├── it_IT.json
-    └── ja_JP.json
+├── primary/
+├── primary-assistant/
+├── highschool/
+└── progress/
 ```
 
 `index.json` contient la langue par défaut, la liste des langues disponibles et
-leurs catalogues complémentaires. Le dossier `primary` isole les textes du
-niveau primaire afin qu'un nouveau module puisse ajouter ses traductions sans
-transformer le fichier principal en catalogue monolithique.
+leurs catalogues complémentaires. Les dossiers thématiques isolent les textes
+du primaire, de l'assistant, du lycée et du suivi local afin qu'un nouveau
+module puisse ajouter ses traductions sans transformer le fichier principal en
+catalogue monolithique.
 Au démarrage, l'application charge d'abord le catalogue français complet, puis
 remplace les clés disponibles par celles de la langue choisie. Une nouvelle
 notion reste donc lisible en français tant que sa traduction n'a pas encore été
@@ -338,17 +368,16 @@ textes qu'elle traduit.
 
 ### Processus de traduction
 
-Le français est la langue source du projet. Lorsqu'un texte ou une clé est
-ajouté, Codex modifie uniquement les catalogues `fr_FR.json`. Les traductions
-anglaises, espagnoles, italiennes et japonaises sont ensuite produites avec
-l'outil de traduction choisi par le responsable du projet.
+Le français reste la langue source du projet. Lorsqu'un texte ou une clé est
+ajouté, les cinq catalogues peuvent désormais être mis à jour ensemble. Le test
+de parité vérifie ensuite que les clés et paramètres sont identiques en
+français, anglais, espagnol, italien et japonais.
 
 Tous les fichiers JSON utilisent le même format : UTF-8, indentation de deux
 espaces et une propriété par ligne.
 
-Les nouvelles clés françaises sont ajoutées à la suite de
-`exercise.subtraction.explanation` dans `fr_FR.json`, conformément à la
-convention du projet.
+Une fonctionnalité transversale peut utiliser un supplément dédié, comme le
+dossier `progress`, plutôt que d'allonger les catalogues principaux.
 
 ### Ajouter une langue
 

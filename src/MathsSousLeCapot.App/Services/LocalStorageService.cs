@@ -20,6 +20,11 @@ public sealed class LocalStorageService
     private const string TrainingFileName = "training_history.json";
 
     /// <summary>
+    /// Nom du résumé léger utilisé par les badges sans relire tout l'historique.
+    /// </summary>
+    private const string AchievementFileName = "perfect_achievements.json";
+
+    /// <summary>
     /// Ancienne clé MAUI Preferences de la progression, conservée pour migrer les données.
     /// </summary>
     private const string LegacyProgressKey = "course_progress";
@@ -30,18 +35,27 @@ public sealed class LocalStorageService
     private const string LegacyTrainingKey = "training_history";
 
     /// <summary>
+    /// Verrou commun aux instances créées par les différentes pages.
+    /// </summary>
+    private static readonly object StorageSync = new();
+
+    /// <summary>
     /// Incrémente le nombre de lectures du cours indiqué.
     /// </summary>
     public CourseProgress RegisterCourseRead(string courseId)
     {
-        var progress = LoadProgress();
-        var current = progress.FirstOrDefault(item => item.CourseId == courseId)
-            ?? new CourseProgress(courseId, 0, null);
-        var updated = current with { ReadCount = current.ReadCount + 1 };
+        lock (StorageSync)
+        {
+            var profileId = LocalProfileService.Current.ActiveProfile.Id;
+            var progress = LoadProgress(profileId);
+            var current = progress.FirstOrDefault(item => item.CourseId == courseId)
+                ?? new CourseProgress(courseId, 0, null);
+            var updated = current with { ReadCount = current.ReadCount + 1 };
 
-        Replace(progress, updated, item => item.CourseId == courseId);
-        Save(ProgressFileName, progress);
-        return updated;
+            Replace(progress, updated, item => item.CourseId == courseId);
+            Save(profileId, ProgressFileName, progress);
+            return updated;
+        }
     }
 
     /// <summary>
@@ -49,16 +63,20 @@ public sealed class LocalStorageService
     /// </summary>
     public CourseProgress CompleteCourse(string courseId)
     {
-        var progress = LoadProgress();
-        var current = progress.FirstOrDefault(item => item.CourseId == courseId)
-            ?? new CourseProgress(courseId, 1, null);
-        var updated = current.FirstCompletedAt is null
-            ? current with { FirstCompletedAt = DateTimeOffset.Now }
-            : current;
+        lock (StorageSync)
+        {
+            var profileId = LocalProfileService.Current.ActiveProfile.Id;
+            var progress = LoadProgress(profileId);
+            var current = progress.FirstOrDefault(item => item.CourseId == courseId)
+                ?? new CourseProgress(courseId, 1, null);
+            var updated = current.FirstCompletedAt is null
+                ? current with { FirstCompletedAt = DateTimeOffset.Now }
+                : current;
 
-        Replace(progress, updated, item => item.CourseId == courseId);
-        Save(ProgressFileName, progress);
-        return updated;
+            Replace(progress, updated, item => item.CourseId == courseId);
+            Save(profileId, ProgressFileName, progress);
+            return updated;
+        }
     }
 
     /// <summary>
@@ -66,32 +84,147 @@ public sealed class LocalStorageService
     /// </summary>
     public void SaveTrainingSession(TrainingSession session)
     {
-        var sessions = Load<List<TrainingSession>>(
-            TrainingFileName,
-            LegacyTrainingKey) ?? [];
-        sessions.Add(session);
-        Save(TrainingFileName, sessions);
+        lock (StorageSync)
+        {
+            var profileId = LocalProfileService.Current.ActiveProfile.Id;
+            var sessions = Load<List<TrainingSession>>(
+                profileId,
+                TrainingFileName,
+                profileId == LocalProfileService.DefaultProfileId
+                    ? LegacyTrainingKey
+                    : null) ?? [];
+            sessions.Add(session);
+            Save(profileId, TrainingFileName, sessions);
+
+            var achievements = LoadAchievements(profileId, sessions);
+            if (CourseAchievementCalculator.IsPerfect(session)
+                && !achievements.Any(achievement =>
+                    achievement.CourseId == session.CourseId
+                    && achievement.Difficulty == session.Difficulty))
+            {
+                achievements.Add(new PerfectTrainingAchievement(
+                    session.CourseId,
+                    session.Difficulty,
+                    session.CompletedAt));
+                Save(profileId, AchievementFileName, achievements);
+            }
+        }
+    }
+
+    /// <summary>
+    /// Retourne toute la progression du profil actif.
+    /// </summary>
+    public IReadOnlyList<CourseProgress> GetCourseProgress()
+    {
+        return GetCourseProgress(LocalProfileService.Current.ActiveProfile.Id);
+    }
+
+    /// <summary>
+    /// Retourne toute la progression d'un profil précis pour les comparaisons locales.
+    /// </summary>
+    public IReadOnlyList<CourseProgress> GetCourseProgress(string profileId)
+    {
+        lock (StorageSync)
+        {
+            return LoadProgress(profileId).ToArray();
+        }
+    }
+
+    /// <summary>
+    /// Retourne les sessions du profil actif de la plus récente à la plus ancienne.
+    /// </summary>
+    public IReadOnlyList<TrainingSession> GetTrainingSessions()
+    {
+        return GetTrainingSessions(LocalProfileService.Current.ActiveProfile.Id);
+    }
+
+    /// <summary>
+    /// Retourne les sessions d'un profil précis pour les statistiques locales.
+    /// </summary>
+    public IReadOnlyList<TrainingSession> GetTrainingSessions(string profileId)
+    {
+        lock (StorageSync)
+        {
+            return (Load<List<TrainingSession>>(
+                    profileId,
+                    TrainingFileName,
+                    profileId == LocalProfileService.DefaultProfileId
+                        ? LegacyTrainingKey
+                        : null) ?? [])
+                .OrderByDescending(session => session.CompletedAt)
+                .ToArray();
+        }
+    }
+
+    /// <summary>
+    /// Retourne le résumé des réussites parfaites du profil actif.
+    /// </summary>
+    public IReadOnlyList<PerfectTrainingAchievement> GetPerfectTrainingAchievements()
+    {
+        lock (StorageSync)
+        {
+            return LoadAchievements(LocalProfileService.Current.ActiveProfile.Id)
+                .ToArray();
+        }
     }
 
     /// <summary>
     /// Charge la collection de progression ou crée une liste vide.
     /// </summary>
-    private static List<CourseProgress> LoadProgress()
+    private static List<CourseProgress> LoadProgress(string profileId)
     {
         return Load<List<CourseProgress>>(
+            profileId,
             ProgressFileName,
-            LegacyProgressKey) ?? [];
+            profileId == LocalProfileService.DefaultProfileId
+                ? LegacyProgressKey
+                : null) ?? [];
+    }
+
+    /// <summary>
+    /// Charge le résumé ou le crée une seule fois depuis un ancien historique détaillé.
+    /// </summary>
+    private static List<PerfectTrainingAchievement> LoadAchievements(
+        string profileId,
+        IReadOnlyList<TrainingSession>? knownSessions = null)
+    {
+        var stored = Load<List<PerfectTrainingAchievement>>(
+            profileId,
+            AchievementFileName,
+            null);
+        if (stored is not null)
+        {
+            return stored;
+        }
+
+        var sessions = knownSessions
+            ?? Load<List<TrainingSession>>(
+                profileId,
+                TrainingFileName,
+                profileId == LocalProfileService.DefaultProfileId
+                    ? LegacyTrainingKey
+                    : null)
+            ?? [];
+        var achievements = CourseAchievementCalculator.CreateAchievements(sessions)
+            .ToList();
+        Save(profileId, AchievementFileName, achievements);
+        return achievements;
     }
 
     /// <summary>
     /// Désérialise une valeur depuis un fichier JSON, avec migration des anciennes préférences.
     /// </summary>
-    private static T? Load<T>(string fileName, string legacyKey)
+    private static T? Load<T>(
+        string profileId,
+        string fileName,
+        string? legacyKey)
     {
-        var path = AppDataPathService.GetDataFilePath(fileName);
+        var path = AppDataPathService.GetProfileDataFilePath(profileId, fileName);
         var json = File.Exists(path)
             ? File.ReadAllText(path)
-            : Preferences.Default.Get(legacyKey, string.Empty);
+            : legacyKey is null
+                ? string.Empty
+                : Preferences.Default.Get(legacyKey, string.Empty);
         if (string.IsNullOrWhiteSpace(json))
         {
             return default;
@@ -116,10 +249,10 @@ public sealed class LocalStorageService
     /// <summary>
     /// Sérialise une valeur dans un fichier JSON sauvegardable.
     /// </summary>
-    private static void Save<T>(string fileName, T value)
+    private static void Save<T>(string profileId, string fileName, T value)
     {
         File.WriteAllText(
-            AppDataPathService.GetDataFilePath(fileName),
+            AppDataPathService.GetProfileDataFilePath(profileId, fileName),
             LocalDataSerializer.Serialize(value));
     }
 

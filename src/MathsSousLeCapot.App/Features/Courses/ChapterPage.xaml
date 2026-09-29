@@ -18,6 +18,48 @@
                     Style="{StaticResource SecondaryButton}"
                     Text="{loc:Translate actions.settings}" />
             </Grid>
+            <Label
+                x:Name="ActiveProfileLabel"
+                TextColor="{DynamicResource TextSecondary}" />
+            <FlexLayout
+                AlignItems="Start"
+                Direction="Row"
+                JustifyContent="Start"
+                Wrap="Wrap">
+                <Button
+                    Margin="0,0,10,10"
+                    Clicked="OnOpenProgressClicked"
+                    Style="{StaticResource SecondaryButton}"
+                    Text="{loc:Translate progress.open}" />
+                <Button
+                    Margin="0,0,10,10"
+                    Clicked="OnOpenProfilesClicked"
+                    Style="{StaticResource SecondaryButton}"
+                    Text="{loc:Translate profile.manage}" />
+                <Button
+                    Margin="0,0,10,10"
+                    Clicked="OnOpenChallengesClicked"
+                    Style="{StaticResource SecondaryButton}"
+                    Text="{loc:Translate challenge.open}" />
+            </FlexLayout>
+            <Border Style="{StaticResource Card}">
+                <VerticalStackLayout Spacing="12">
+                    <Label Style="{StaticResource SectionTitle}" Text="{loc:Translate search.title}" />
+                    <SearchBar
+                        x:Name="CourseSearchBar"
+                        Placeholder="{loc:Translate search.placeholder}"
+                        TextChanged="OnSearchChanged" />
+                    <Picker
+                        x:Name="TagPicker"
+                        SelectedIndexChanged="OnTagChanged"
+                        Title="{loc:Translate search.tagFilter}" />
+                    <Label
+                        x:Name="SearchStatusLabel"
+                        TextColor="{DynamicResource TextSecondary}" />
+                    <VerticalStackLayout x:Name="SearchResultsPanel" Spacing="12" />
+                </VerticalStackLayout>
+            </Border>
+            <Label Style="{StaticResource SectionTitle}" Text="{loc:Translate chapter.allCourses}" />
             <VerticalStackLayout x:Name="CoursesPanel" Spacing="18" />
         </VerticalStackLayout>
     </ScrollView>

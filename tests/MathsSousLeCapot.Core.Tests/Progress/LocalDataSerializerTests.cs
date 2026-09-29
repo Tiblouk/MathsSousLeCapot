@@ -26,6 +26,49 @@ public sealed class LocalDataSerializerTests
         Assert.Equal(expected, actual);
     }
 
+    /// <summary>
+    /// Vérifie que le registre de profils reste portable entre les plateformes.
+    /// </summary>
+    [Fact]
+    public void Round_trip_preserves_local_profile_registry()
+    {
+        var profile = new LocalProfile(
+            "default",
+            "Principal",
+            new DateTimeOffset(2026, 8, 16, 12, 0, 0, TimeSpan.Zero));
+        var expected = new LocalProfileRegistry(profile.Id, [profile]);
+
+        var json = LocalDataSerializer.Serialize(expected);
+        var success = LocalDataSerializer.TryDeserialize<LocalProfileRegistry>(
+            json,
+            out var actual);
+
+        Assert.True(success);
+        Assert.NotNull(actual);
+        Assert.Equal(expected.ActiveProfileId, actual.ActiveProfileId);
+        Assert.Equal(expected.Profiles, actual.Profiles);
+    }
+
+    /// <summary>
+    /// Vérifie que le résumé léger des badges peut être sauvegardé puis relu.
+    /// </summary>
+    [Fact]
+    public void Round_trip_preserves_perfect_training_achievement()
+    {
+        var expected = new PerfectTrainingAchievement(
+            "course-id",
+            TrainingDifficulty.Hard,
+            new DateTimeOffset(2026, 9, 28, 12, 0, 0, TimeSpan.Zero));
+
+        var json = LocalDataSerializer.Serialize(expected);
+        var success = LocalDataSerializer.TryDeserialize<PerfectTrainingAchievement>(
+            json,
+            out var actual);
+
+        Assert.True(success);
+        Assert.Equal(expected, actual);
+    }
+
     [Theory]
     [InlineData("")]
     [InlineData("not-json")]

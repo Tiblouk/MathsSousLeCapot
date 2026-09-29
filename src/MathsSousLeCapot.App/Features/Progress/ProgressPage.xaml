@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="MathsSousLeCapot.App.Features.Progress.ProgressPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:loc="clr-namespace:MathsSousLeCapot.App.Localization"
+    Title="{loc:Translate progress.title}">
+    <ScrollView>
+        <VerticalStackLayout
+            MaximumWidthRequest="900"
+            Padding="24,28,24,40"
+            Spacing="20">
+            <Button
+                Clicked="OnBackClicked"
+                HorizontalOptions="Start"
+                Style="{StaticResource SecondaryButton}"
+                Text="{loc:Translate navigation.courseList}" />
+            <Label Style="{StaticResource PageTitle}" Text="{loc:Translate progress.title}" />
+            <Label
+                x:Name="ProfileLabel"
+                TextColor="{DynamicResource TextSecondary}" />
+
+            <Border Style="{StaticResource Card}">
+                <VerticalStackLayout Spacing="16">
+                    <Label Style="{StaticResource SectionTitle}" Text="{loc:Translate progress.summary}" />
+                    <Grid
+                        ColumnDefinitions="*,*"
+                        ColumnSpacing="16"
+                        RowDefinitions="Auto,Auto,Auto"
+                        RowSpacing="14">
+                        <VerticalStackLayout Grid.Row="0" Grid.Column="0" Spacing="2">
+                            <Label x:Name="ConsultedValueLabel" FontAttributes="Bold" FontSize="24" />
+                            <Label Text="{loc:Translate progress.consulted}" TextColor="{DynamicResource TextSecondary}" />
+                        </VerticalStackLayout>
+                        <VerticalStackLayout Grid.Row="0" Grid.Column="1" Spacing="2">
+                            <Label x:Name="CompletedValueLabel" FontAttributes="Bold" FontSize="24" />
+                            <Label Text="{loc:Translate progress.completed}" TextColor="{DynamicResource TextSecondary}" />
+                        </VerticalStackLayout>
+                        <VerticalStackLayout Grid.Row="1" Grid.Column="0" Spacing="2">
+                            <Label x:Name="SessionsValueLabel" FontAttributes="Bold" FontSize="24" />
+                            <Label Text="{loc:Translate progress.sessions}" TextColor="{DynamicResource TextSecondary}" />
+                        </VerticalStackLayout>
+                        <VerticalStackLayout Grid.Row="1" Grid.Column="1" Spacing="2">
+                            <Label x:Name="AccuracyValueLabel" FontAttributes="Bold" FontSize="24" />
+                            <Label Text="{loc:Translate progress.accuracy}" TextColor="{DynamicResource TextSecondary}" />
+                        </VerticalStackLayout>
+                        <VerticalStackLayout Grid.Row="2" Grid.Column="0" Spacing="2">
+                            <Label x:Name="ReadCountValueLabel" FontAttributes="Bold" FontSize="24" />
+                            <Label Text="{loc:Translate progress.readCount}" TextColor="{DynamicResource TextSecondary}" />
+                        </VerticalStackLayout>
+                        <VerticalStackLayout Grid.Row="2" Grid.Column="1" Spacing="2">
+                            <Label x:Name="ScoreValueLabel" FontAttributes="Bold" FontSize="24" TextColor="{DynamicResource Primary}" />
+                            <Label Text="{loc:Translate progress.score}" TextColor="{DynamicResource TextSecondary}" />
+                        </VerticalStackLayout>
+                    </Grid>
+                </VerticalStackLayout>
+            </Border>
+
+            <FlexLayout Direction="Row" Wrap="Wrap">
+                <Button
+                    Margin="0,0,10,10"
+                    Clicked="OnOpenChallengesClicked"
+                    Text="{loc:Translate challenge.open}" />
+                <Button
+                    Margin="0,0,10,10"
+                    Clicked="OnOpenProfilesClicked"
+                    Style="{StaticResource SecondaryButton}"
+                    Text="{loc:Translate profile.manage}" />
+            </FlexLayout>
+
+            <Label Style="{StaticResource SectionTitle}" Text="{loc:Translate progress.coursesTitle}" />
+            <VerticalStackLayout x:Name="CourseProgressPanel" Spacing="12" />
+
+            <Label Style="{StaticResource SectionTitle}" Text="{loc:Translate progress.historyTitle}" />
+            <VerticalStackLayout x:Name="HistoryPanel" Spacing="12" />
+            <Button
+                x:Name="LoadMoreButton"
+                Clicked="OnLoadMoreClicked"
+                HorizontalOptions="Start"
+                IsVisible="False"
+                Style="{StaticResource SecondaryButton}"
+                Text="{loc:Translate progress.loadMore}" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

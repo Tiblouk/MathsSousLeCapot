@@ -3,11 +3,11 @@
 Ce document décrit l'état réellement observé de **Maths Sous le capot**. Il ne
 remplace ni la vision de `projet.md`, ni le catalogue pédagogique de `cours.md`.
 
-**Date de l'audit :** 10 août 2026
+**Date de l'audit :** 29 septembre 2026
 
 **Référence initiale :** commit Git `4d0b935`
 
-**Version applicative déclarée :** `1.0` (`ApplicationVersion` 1)
+**Version applicative déclarée :** `0.1.1` (`ApplicationVersion` 2)
 
 ## Lecture des états
 
@@ -68,6 +68,7 @@ ce qui explique les totaux visibles dans l'application.
 |---|---|---|
 | Menu par ensemble, classe et catégorie | Implémenté et vérifié | Accordéons repliés par défaut et navigation Windows parcourue manuellement. |
 | Chargement progressif du menu | Implémenté et vérifié | Les ensembles sont créés au démarrage ; niveaux, catégories et cartes sont matérialisés au premier déploiement. |
+| Recherche et tags | Implémenté et vérifié techniquement | L'index contient chaque cours disponible une seule fois et ne construit que ses métadonnées. Recherche localisée par titre, niveau, catégorie et tags. |
 | Fiche d'entrée d'un cours | Implémenté et vérifié | Titre, niveau, objectif, résumé, prérequis et accès au cours ou à l'entraînement. |
 | Cours par étapes | Implémenté et vérifié techniquement | Pages dédiées pour les premiers modules et pages génériques pour primaire, collège et lycée. |
 | Profondeur pédagogique | Implémenté partiellement | Le modèle enrichi existe, mais de nombreux cours avancés utilisent encore des explications trop courtes ou génériques. |
@@ -83,8 +84,12 @@ ce qui explique les totaux visibles dans l'application.
 | Mesures | Implémenté et vérifié techniquement | Tableau commun pour longueurs, masses, contenances et aires. |
 | Traductions | Implémenté et vérifié structurellement | Français, anglais, espagnol, italien et japonais ; parité des clés connues et paramètres contrôlés par tests. La qualité linguistique complète n'est pas auditée automatiquement. |
 | Thèmes | Implémenté et vérifié | Clair, sombre et sépia avec palettes sémantiques centralisées. |
-| Sauvegarde de progression | Implémenté et vérifié par tests | Nombre de lectures et date de première validation dans `course_progress.json`. |
-| Historique d'entraînement | Implémenté partiellement | Les sessions sont écrites dans `training_history.json`, mais aucune interface complète de consultation et suppression n'est présente. |
+| Sauvegarde de progression | Implémenté et vérifié par tests | Nombre de lectures et date de première validation isolés dans le dossier du profil actif. |
+| Écran « Mon parcours » | Implémenté et vérifié techniquement | Statistiques, progression par cours et historique chargé par tranches de dix sessions. |
+| Historique d'entraînement | Implémenté partiellement | Les sessions sont enregistrées et consultables ; la suppression par session, cours ou historique complet reste à ajouter. |
+| Profils locaux multiples | Implémenté et vérifié techniquement | Création, sélection, renommage et suppression ; migration non destructive des anciennes données vers le profil principal. |
+| Badges de cours | Implémenté et vérifié par tests | Badge et couleur bleus après lecture, verts après une session sans faute et or après une session difficile sans faute. |
+| Défis et scores locaux | Implémenté et vérifié par tests | Six défis ; points d'entraînement accordés une seule fois par cours et difficulté selon le niveau scolaire ; classement limité aux profils de l'appareil, sans réseau. |
 | Paramètres persistants | Implémenté et vérifié | Langue et thème dans `settings.json`, avec migration des anciennes préférences MAUI. |
 | Version Windows portable | Implémenté, validation externe restante | Script et archive autonome prévus ; le démarrage sur des machines Windows 10 et 11 propres reste à certifier. |
 | APK Android autonome | Implémenté et compilable | Assemblies embarquées et format APK ; la matrice d'appareils physiques reste manuelle. |
@@ -95,8 +100,10 @@ ce qui explique les totaux visibles dans l'application.
 | Fichier | Contenu |
 |---|---|
 | `settings.json` | Langue et thème sélectionnés |
-| `course_progress.json` | Lectures et première validation de chaque cours |
-| `training_history.json` | Sessions d'entraînement vérifiées |
+| `profiles.json` | Profils locaux et identifiant du profil actif |
+| `Profiles/<id>/course_progress.json` | Lectures et première validation des cours du profil |
+| `Profiles/<id>/training_history.json` | Sessions d'entraînement vérifiées du profil |
+| `Profiles/<id>/perfect_achievements.json` | Résumé léger des sessions sans faute utilisé par les badges |
 
 Sur Windows portable, le dossier `Data` situé à côté de l'exécutable est
 utilisé lorsqu'il existe. Sur Windows classique, les fichiers sont placés dans
@@ -110,9 +117,11 @@ catalogues ou des générateurs.
 
 | Vérification | Dernier résultat connu | Date |
 |---|---|---|
-| Tests `MathsSousLeCapot.Core.Tests` | 247 réussis, 0 échec | 10 août 2026 |
-| Build Windows Debug | Réussi, 0 avertissement | 10 août 2026 |
-| Build Android Debug | Réussi, 0 avertissement | 10 août 2026 |
+| Tests `MathsSousLeCapot.Core.Tests` | 265 réussis, 0 échec | 29 septembre 2026 |
+| Build Windows Debug | Réussi, 0 avertissement | 29 septembre 2026 |
+| Build Android Debug | Réussi, 0 avertissement | 29 septembre 2026 |
+| Démarrage Windows Debug | Processus stable pendant 10 secondes, registre de profils valide | 29 septembre 2026 |
+| Portable Windows 0.1.1 | Publication autonome réussie et démarrage stable pendant 12 secondes | 29 septembre 2026 |
 | Parcours principal Windows | Menu, cours, entraînement et assistant parcourus manuellement | 9 août 2026 |
 | Android physique | Utilisation signalée, sans campagne reproductible documentée | Non certifié |
 | Portable Windows 10 propre | Non vérifié | À faire |
@@ -129,12 +138,13 @@ catalogues ou des générateurs.
    raisonnement détaillé.
 4. Les tests automatisés ciblent principalement le cœur métier. Il n'existe pas
    de suite automatisée pour l'interface MAUI sur Windows et Android.
-5. L'historique est sauvegardé, mais sa consultation et ses différents niveaux
-   de suppression ne sont pas encore exposés dans l'interface.
+5. L'historique est consultable, mais ses différents niveaux de suppression ne
+   sont pas encore exposés dans l'interface.
 6. Plusieurs responsabilités sont concentrées dans de grands fichiers,
    notamment le catalogue principal, les générateurs, les corrections
    détaillées et le rendu du calcul guidé.
-7. `bugs.md` et `idées.md` n'ont pas encore de format de suivi explicite.
+7. Les nouveaux écrans de recherche, profils, progression et défis restent à
+   parcourir sur plusieurs tailles d'écran Android physiques.
 
 ## Mise à jour de ce document
 

@@ -21,6 +21,7 @@ public static class ThemeCatalog
             new ThemePalette(
                 "#46627A", "#334A5E", "#E9EEF2", "#FFFFFF", "#F3F4F6",
                 "#FFFFFF", "#20252A", "#626A72", "#D5D9DD", "#F0F3F5",
+                "#1D5FA7", "#E7F1FC", "#7A5A00", "#FFF2BF",
                 "#19713D", "#E5F5EB", "#B3261E", "#FCE8E6"),
             AppTheme.Light),
         new(
@@ -29,6 +30,7 @@ public static class ThemeCatalog
             new ThemePalette(
                 "#8AB4D0", "#B7D3E4", "#263746", "#15191D", "#22282E",
                 "#2A3138", "#F2F4F5", "#B8C0C7", "#46515A", "#252D34",
+                "#80BFFF", "#17324D", "#FFD166", "#4B3B0F",
                 "#75D69B", "#173C28", "#FF8A82", "#481E1B"),
             AppTheme.Dark),
         new(
@@ -37,6 +39,7 @@ public static class ThemeCatalog
             new ThemePalette(
                 "#756043", "#59472F", "#E8DDCA", "#FBF5E9", "#F1E7D5",
                 "#FFF9EE", "#332B22", "#6D6254", "#D6C7AF", "#EFE4D2",
+                "#365F91", "#E7EEF7", "#826200", "#F5E8B8",
                 "#347047", "#E2F0E5", "#A63B32", "#F6E1DC"),
             AppTheme.Light)
     ];

@@ -16,6 +16,11 @@ public static class AppDataPathService
     private const string ApplicationDataDirectoryName = "MathsSousLeCapot";
 
     /// <summary>
+    /// Nom du dossier qui isole les données de chaque profil local.
+    /// </summary>
+    private const string ProfilesDirectoryName = "Profiles";
+
+    /// <summary>
     /// Retourne le dossier de données en le créant si nécessaire.
     /// </summary>
     public static string GetDataDirectory()
@@ -49,5 +54,37 @@ public static class AppDataPathService
     public static string GetDataFilePath(string fileName)
     {
         return Path.Combine(GetDataDirectory(), fileName);
+    }
+
+    /// <summary>
+    /// Retourne le dossier privé d'un profil après validation de son identifiant.
+    /// </summary>
+    public static string GetProfileDataDirectory(string profileId)
+    {
+        if (string.IsNullOrWhiteSpace(profileId)
+            || profileId.Length > 64
+            || profileId.Any(character =>
+                !char.IsLetterOrDigit(character)
+                && character is not '-' and not '_'))
+        {
+            throw new ArgumentException(
+                "L'identifiant du profil local est invalide.",
+                nameof(profileId));
+        }
+
+        var directory = Path.Combine(
+            GetDataDirectory(),
+            ProfilesDirectoryName,
+            profileId);
+        Directory.CreateDirectory(directory);
+        return directory;
+    }
+
+    /// <summary>
+    /// Retourne le chemin d'un fichier appartenant à un profil local.
+    /// </summary>
+    public static string GetProfileDataFilePath(string profileId, string fileName)
+    {
+        return Path.Combine(GetProfileDataDirectory(profileId), fileName);
     }
 }

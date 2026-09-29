@@ -1,7 +1,7 @@
 # Architecture actuelle
 
 Ce document décrit l'architecture réellement implémentée de **Maths Sous le
-capot** au 10 août 2026. Il sert de carte de lecture du code et doit évoluer
+capot** au 28 septembre 2026. Il sert de carte de lecture du code et doit évoluer
 lorsqu'une responsabilité, une dépendance ou un flux structurant change.
 
 ## Vue générale
@@ -112,6 +112,18 @@ seule fois par `EnsureLoaded()`.
 
 Ce comportement est une contrainte d'architecture : un nouveau module ne doit
 pas reconstruire tous les cours ou toutes les visualisations au démarrage.
+
+## Recherche de cours
+
+`CourseSearchCatalog` expose un index différé contenant uniquement
+l'identifiant, le titre, le niveau, la catégorie, le groupe scolaire et les tags
+de chaque cours. Il ne construit ni les étapes pédagogiques, ni les exercices,
+ni les visualisations.
+
+`CourseSearchService` localise ces métadonnées puis effectue une recherche sans
+tenir compte de la casse, des accents ou de la ponctuation. Un filtre peut
+restreindre les résultats à un tag. La fiche complète du cours n'est construite
+qu'après la sélection d'un résultat.
 
 ## Catalogues de cours
 
@@ -249,7 +261,8 @@ lang/
 ├── fr_FR.json, en_US.json, es_ES.json, it_IT.json, ja_JP.json
 ├── primary/
 ├── primary-assistant/
-└── highschool/
+├── highschool/
+└── progress/
 ```
 
 `index.json` déclare la langue française par défaut et les suppléments de chaque
@@ -264,20 +277,51 @@ Les clés sont utilisées dans le XAML par `TranslateExtension` et dans le C# pa
 
 `ThemeCatalog` déclare les thèmes clair, sombre et sépia. Chaque
 `ThemeDefinition` fournit une palette sémantique complète : couleurs
-principales, fonds, textes, bordures, succès et erreurs.
+principales, fonds, textes, bordures, succès, erreurs et états de progression
+des cartes de cours.
 
 `ThemeService` reporte la palette dans les ressources MAUI. Les pages et
 contrôles doivent demander une couleur sémantique au lieu d'introduire une
 couleur locale sans justification.
+
+## Profils, progression et défis
+
+`LocalProfileService` gère plusieurs profils hors ligne. Le profil actif décide
+du dossier lu par `LocalStorageService`, sans changer les identifiants de cours
+présents dans les fichiers. Lors de la première utilisation, les anciens
+fichiers de progression sont copiés vers le profil principal et conservés à
+leur emplacement d'origine.
+
+`LearningProgressCalculator`, situé dans le cœur, calcule les statistiques et
+les défis depuis `CourseProgress` et `TrainingSession`. Une session vérifiée
+compte au maximum une fois pour chaque couple cours/difficulté. Sa valeur de
+base est de 1 point en Fondations/Primaire, 3 au Collège et 5 au Lycée ; les
+difficultés facile, modérée et difficile ajoutent respectivement 0, 1 et 3
+points. Les défis terminés ajoutent leur propre récompense.
+
+`CourseAchievementCalculator` donne la priorité au meilleur état connu : lu,
+sans faute, puis sans faute en difficile. `LocalStorageService` maintient
+`perfect_achievements.json`, un résumé ne contenant ni énoncé ni réponse. Lors
+de la première ouverture suivant une mise à jour, ce résumé peut être reconstruit
+une fois depuis l'ancien historique ; les ouvertures suivantes du menu ne
+désérialisent plus toutes les sessions.
+
+L'historique de l'écran « Mon parcours » est matérialisé par tranches de dix
+sessions. Le classement compare uniquement les profils du même appareil.
 
 ## Stockage local
 
 ```mermaid
 flowchart TD
     PREF["UserPreferencesService"] --> SETTINGS["settings.json"]
-    STORAGE["LocalStorageService"] --> PROGRESS["course_progress.json"]
-    STORAGE --> HISTORY["training_history.json"]
+    PROFILE["LocalProfileService"] --> REGISTRY["profiles.json"]
+    PROFILE --> ACTIVE["Profil actif"]
+    ACTIVE --> STORAGE["LocalStorageService"]
+    STORAGE --> PROGRESS["Profiles/id/course_progress.json"]
+    STORAGE --> HISTORY["Profiles/id/training_history.json"]
+    STORAGE --> ACHIEVEMENTS["Profiles/id/perfect_achievements.json"]
     PATH["AppDataPathService"] --> PREF
+    PATH --> PROFILE
     PATH --> STORAGE
 ```
 
@@ -291,6 +335,10 @@ flowchart TD
 Les services migrent les anciennes valeurs MAUI Preferences lorsqu'aucun
 fichier JSON n'existe. Les modèles persistés doivent rester compatibles ou être
 accompagnés d'une migration explicite.
+
+`settings.json` reste commun à l'application. `profiles.json` répertorie les
+profils et le profil actif. Chaque sous-dossier `Profiles/<id>` isole ensuite la
+progression et les entraînements de son utilisateur.
 
 ## Invariants à préserver
 
@@ -312,6 +360,7 @@ accompagnés d'une migration explicite.
 | Besoin | Point d'entrée |
 |---|---|
 | Ajouter ou classer un cours | Catalogues sous `Core/Courses` |
+| Ajouter ou modifier un tag | `CourseSearchCatalog` et catalogues de traduction `progress` |
 | Ajouter un type d'exercice | Enumération et générateur sous `Core/Training` |
 | Modifier la reconnaissance d'une réponse | `ExerciseAnswerValidator` et convertisseurs de nombres |
 | Ajouter une page spécialisée | `App/Features` et `NavigationService` |
@@ -319,6 +368,7 @@ accompagnés d'une migration explicite.
 | Ajouter une langue ou un supplément | `Resources/Raw/lang/index.json` et catalogues JSON |
 | Ajouter un thème | `ThemeCatalog` et `ThemeDefinition` |
 | Faire évoluer les données locales | Modèles `Core/Progress`, sérialiseur et services de stockage |
+| Ajouter un défi ou modifier le score | `LearningProgressCalculator` avec tests dédiés |
 | Ajouter une règle mathématique | Sous-dossier adapté de `Core/Mathematics` avec tests |
 
 La procédure détaillée d'ajout d'un cours sera documentée dans une phase
